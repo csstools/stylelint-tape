@@ -55,7 +55,7 @@ const runTest = (ruleName, test, opts) => stylelint.lint({
 		[]
 	);
 
-	if (warnings.length && typeof test.warnings === 'number' && test.warnings !== warnings.length) {
+	if (typeof test.warnings === 'number' && test.warnings !== warnings.length) {
 		throw new Error(`Expected ${test.warnings} warnings\nReceived ${warnings.length} warnings`);
 	}
 
