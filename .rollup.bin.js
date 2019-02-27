@@ -8,8 +8,23 @@ export default {
 	plugins: [
 		babel({
 			presets: [
-				['@babel/env', { modules: false, targets: { node: 6 } }]
+				['@babel/env', {
+					loose: true,
+					modules: false,
+					targets: { node: 6 },
+					useBuiltIns: 'entry'
+				}]
 			]
-		})
+		}),
+		addHashBang()
 	]
 };
+
+function addHashBang() {
+	return {
+		name: 'add-hash-bang',
+		renderChunk(code) {
+			return `#!/usr/bin/env node\n${code}`;
+		}
+	};
+}

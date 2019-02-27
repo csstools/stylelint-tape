@@ -56,7 +56,31 @@ const runTest = (ruleName, test, opts) => stylelint.lint({
 	);
 
 	if (typeof test.warnings === 'number' && test.warnings !== warnings.length) {
+		// throw when the warning length by number does not match
 		throw new Error(`Expected ${test.warnings} warnings\nReceived ${warnings.length} warnings`);
+	} else if (Array.isArray(test.warnings)) {
+		if (test.warnings.length !== warnings.length) {
+			// throw when the warning length by array does not match
+			throw new Error(`Expected ${test.warnings.length} warnings\nReceived ${warnings.length} warnings`);
+		} else {
+			test.warnings.forEach(
+				(warningEntry, warningIndex) => {
+					if (typeof warningEntry === 'string') {
+						if (warningEntry !== warnings[warningIndex].text) {
+							// throw when the warning text does not match
+							throw new Error(`Expected warning: "${warningEntry}"\nRecieved warning: "${warnings[warningIndex].text}"`);
+						}
+					} else {
+						Object.keys(Object(warningEntry)).forEach(warningKey => {
+							if (warnings[warningIndex][warningKey] === warningEntry[warningKey]) {
+								// throw when the warning key-value pair does not match
+								throw new Error(`Expected: "${warningKey}" as ${warnings[warningIndex][warningKey]}\nRecieved: ${warningEntry[warningKey]}`);
+							}
+						});
+					}
+				}
+			);
+		}
 	}
 
 	if (test.expect && results.output !== test.expect) {

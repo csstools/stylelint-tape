@@ -1,5 +1,9 @@
 # Changes to stylelint-tape
 
+### 1.0.2 (February 27, 2019)
+
+- Fixed an issue where `warnings` could not evaluate strings or key-value pairs.
+
 ### 1.0.1 (September 29, 2018)
 
 - Fixed an issue where `warnings` were ignored if no warnings were encountered.
