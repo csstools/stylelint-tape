@@ -8,5 +8,5 @@ package-lock.json
 !.rollup.bin.js
 !.tape.js
 !.travis.yml
-/bin.*
+/cli.*
 /index.*
