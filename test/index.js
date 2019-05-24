@@ -22,7 +22,7 @@ const ruleFunction = (action, opts, context) => {
 };
 
 const messages = stylelint.utils.ruleMessages(ruleName, {
-	unexpectedRoot(rule, fix) {
+	unexpectedRoot (rule, fix) {
 		return `Unexpected "${rule.selector}" rule. Use "${fix}".`;
 	}
 });
