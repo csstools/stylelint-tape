@@ -5,7 +5,7 @@ const input = isCLI ? 'src/cli.js' : 'src/index.js';
 const output = isCLI
 	? { file: 'cli.js', format: 'cjs', sourcemap: true, strict: false }
 : [
-	{ file: 'index.js', format: 'cjs', sourcemap: true, strict: false },
+	{ file: 'index.js', format: 'cjs', sourcemap: true, strict: false, exports: 'default' },
 	{ file: 'index.mjs', format: 'esm', sourcemap: true, strict: false }
 ];
 

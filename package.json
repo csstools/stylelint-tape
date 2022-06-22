@@ -1,6 +1,6 @@
 {
   "name": "stylelint-tape",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Test stylelint plugins",
   "author": "Jonathan Neal <jonathantneal@hotmail.com>",
   "license": "CC0-1.0",
@@ -9,6 +9,12 @@
   "bugs": "https://github.com/csstools/stylelint-tape/issues",
   "main": "index.js",
   "module": "index.mjs",
+  "exports": {
+    ".": {
+      "require": "./index.js",
+      "import": "./index.mjs"
+    }
+  },
   "bin": {
     "stylelint-tape": "cli.js"
   },
@@ -24,7 +30,7 @@
     "build": "npm run build:api && npm run build:cli",
     "build:api": "cross-env NODE_ENV=api rollup --config --silent",
     "build:cli": "cross-env NODE_ENV=cli rollup --config --silent",
-    "posttest:cli": "npm unlink",
+    "posttest:cli": "npm unlink stylelint-tape",
     "prepublishOnly": "npm run test:js && npm run test:node && npm run build:cli",
     "pretest:cli": "npm run build:cli && npm link",
     "pretest:node": "npm run build:api",
@@ -37,47 +43,39 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
-    "log-update": "^3.2.0"
+    "log-update": "^4"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.5",
-    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
-    "@babel/preset-env": "^7.4.5",
+    "@babel/core": "^7.18.5",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/preset-env": "^7.18.2",
     "babel-eslint": "^10.0.1",
-    "cross-env": "^5.2.0",
-    "eslint": "^5.16.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.18.0",
+    "eslint-config-dev": "^3.1.0",
     "pre-commit": "^1.2.2",
-    "rollup": "^1.12.3",
+    "rollup": "^2.75.7",
     "rollup-plugin-babel": "^4.3.2",
-    "stylelint": "^9.10.1"
+    "stylelint": "^14.9.1"
   },
   "peerDependencies": {
-    "stylelint": "^10"
+    "stylelint": ">= 10"
   },
   "eslintConfig": {
+    "root": true,
+    "extends": [
+      "eslint-config-dev"
+    ],
+    "ignorePatterns": "dist",
     "env": {
       "browser": true,
       "es6": true,
       "node": true
     },
-    "extends": "eslint:recommended",
-    "parser": "babel-eslint",
     "parserOptions": {
       "ecmaVersion": 2018,
       "impliedStrict": true,
       "sourceType": "module"
-    },
-    "root": true,
-    "rules": {
-      "no-console": [
-        0,
-        {
-          "allow": [
-            "warn",
-            "error"
-          ]
-        }
-      ]
     }
   },
   "keywords": [

@@ -1,5 +1,9 @@
 # Changes to stylelint-tape
 
+### 3.0.0 (June 22, 2022)
+
+- Updated: `log-update` to 4 (major)
+
 ### 2.0.0 (May 24, 2019)
 
 - Updated: `log-update` to 3.2.0 (major)
