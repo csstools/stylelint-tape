@@ -24,8 +24,8 @@ export default async (options, testsByRuleName) => {
 						() => {
 							const title = getTitleByTest(test);
 
-						// update log for pending test
-						logUpdate(`${dim(wait)} ${title}`);
+							// update log for pending test
+							logUpdate(`${dim(wait)} ${title}`);
 
 							// run test and update log with results
 							return runTest(ruleName, test, normalizedopts, errorsCount).then(
