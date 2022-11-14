@@ -24,7 +24,7 @@ export default async (options, testsByRuleName) => {
 						() => {
 							const title = getTitleByTest(test);
 
-						// update log for pending test								// update log for pending test
+						// update log for pending test
 						logUpdate(`${dim(wait)} ${title}`);
 
 							// run test and update log with results
