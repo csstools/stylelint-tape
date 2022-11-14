@@ -6,7 +6,9 @@ import { trim, json } from '../lib/utils';
 import { done, fail, wait } from '../lib/symbols';
 import nodeOptions from '../lib/get-node-options';
 
-export default (options, testsByRuleName) => {
+export default async (options, testsByRuleName) => {
+	let errorsCount = 0
+
 	const normalizedopts = Object.assign({}, nodeOptions, options === Object(options)
 		? options
 	: { plugin: options });
@@ -14,30 +16,46 @@ export default (options, testsByRuleName) => {
 	normalizedopts.plugin = path.resolve(normalizedopts.cwd, normalizedopts.plugin || '');
 
 	// run tests by rule name
-	return Object.keys(testsByRuleName).reduce(
-		(p1, ruleName) => p1.then(
-			() => testsByRuleName[ruleName].reduce(
-				(p2, test) => p2.then(
-					() => {
-						const title = getTitleByTest(test);
+	async function runAllTests() {
+		return Object.keys(testsByRuleName).reduce(
+			(p1, ruleName) => p1.then(
+				() => testsByRuleName[ruleName].reduce(
+					(p2, test) => p2.then(
+						() => {
+							const title = getTitleByTest(test);
 
-						// update log for pending test
-						logUpdate(`${dim(wait)} ${title}`);
+							// update log for pending test
+							logUpdate(`${dim(wait)} ${title}`);
 
-						// run test and update log with results
-						return runTest(ruleName, test, normalizedopts).then(
-							() => logUpdate(`${green(done)} ${white(title)}`),
-							error => logUpdate(`${red(fail)} ${bold(title)}\n ${yellow(trim(error.message))}`)
-						).then(
-							() => logUpdate.done()
-						);
-					}
-				),
-				Promise.resolve()
-			)
-		),
-		Promise.resolve()
-	);
+							// run test and update log with results
+							return runTest(ruleName, test, normalizedopts, errorsCount).then(
+								() => logUpdate(`${green(done)} ${white(title)}`),
+								error => {
+									// update error count in case there is errors
+									errorsCount++
+									logUpdate(`${red(fail)} ${bold(title)}\n ${yellow(trim(error.message))}`)
+								}
+							).then(
+								() => {
+									logUpdate.done()
+								}
+							);
+						}
+					),
+					Promise.resolve()
+				)
+			),
+			Promise.resolve()
+		)
+	};
+
+	await runAllTests()
+
+	if (errorsCount === 0) {
+		return Promise.resolve()
+	} else {
+		return Promise.reject(Error('Tests failed.'))
+	}
 };
 
 const runTest = (ruleName, test, opts) => stylelint.lint({
@@ -56,10 +74,12 @@ const runTest = (ruleName, test, opts) => stylelint.lint({
 	);
 
 	if (typeof test.warnings === 'number' && test.warnings !== warnings.length) {
+		errorsCount++
 		// throw when the warning length by number does not match
 		throw new Error(`Expected ${test.warnings} warnings\nReceived ${warnings.length} warnings`);
 	} else if (Array.isArray(test.warnings)) {
 		if (test.warnings.length !== warnings.length) {
+			errorsCount++
 			// throw when the warning length by array does not match
 			throw new Error(`Expected ${test.warnings.length} warnings\nReceived ${warnings.length} warnings`);
 		} else {
@@ -67,12 +87,14 @@ const runTest = (ruleName, test, opts) => stylelint.lint({
 				(warningEntry, warningIndex) => {
 					if (typeof warningEntry === 'string') {
 						if (warningEntry !== warnings[warningIndex].text) {
+							errorsCount++
 							// throw when the warning text does not match
 							throw new Error(`Expected warning: "${warningEntry}"\nRecieved warning: "${warnings[warningIndex].text}"`);
 						}
 					} else {
 						Object.keys(Object(warningEntry)).forEach(warningKey => {
 							if (warnings[warningIndex][warningKey] === warningEntry[warningKey]) {
+								errorsCount++
 								// throw when the warning key-value pair does not match
 								throw new Error(`Expected: "${warningKey}" as ${warnings[warningIndex][warningKey]}\nRecieved: ${warningEntry[warningKey]}`);
 							}
@@ -84,6 +106,7 @@ const runTest = (ruleName, test, opts) => stylelint.lint({
 	}
 
 	if (test.expect && results.output !== test.expect) {
+		errorsCount++
 		throw new Error(`Expected: ${test.expect}\nRecieved: ${results.output}`);
 	}
 });
