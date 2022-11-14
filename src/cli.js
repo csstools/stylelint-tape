@@ -7,9 +7,5 @@ const tests = requireOrThrow(path.resolve(cliOptions.cwd, cliOptions.tape));
 
 stylelintTape(cliOptions, tests).then(
 	process.exit.bind(process, 0),
-	error => {
-		console.log('HELLO')
-		process.exitCode = 1
-		console.error(`${error.message}`) || process.exit(1)
-	}
+	error => console.error(`${error.message}`) || process.exit(1)
 );
