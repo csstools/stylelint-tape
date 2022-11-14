@@ -8,5 +8,7 @@ package-lock.json
 !.rollup.bin.js
 !.tape.js
 !.travis.yml
+!.husky
+!.github
 /cli.*
 /index.*
