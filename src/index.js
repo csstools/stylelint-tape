@@ -24,8 +24,8 @@ export default async (options, testsByRuleName) => {
 						() => {
 							const title = getTitleByTest(test);
 
-							// update log for pending test
-							logUpdate(`${dim(wait)} ${title}`);
+						// update log for pending test								// update log for pending test
+						logUpdate(`${dim(wait)} ${title}`);
 
 							// run test and update log with results
 							return runTest(ruleName, test, normalizedopts, errorsCount).then(
@@ -74,12 +74,10 @@ const runTest = (ruleName, test, opts) => stylelint.lint({
 	);
 
 	if (typeof test.warnings === 'number' && test.warnings !== warnings.length) {
-		errorsCount++
 		// throw when the warning length by number does not match
 		throw new Error(`Expected ${test.warnings} warnings\nReceived ${warnings.length} warnings`);
 	} else if (Array.isArray(test.warnings)) {
 		if (test.warnings.length !== warnings.length) {
-			errorsCount++
 			// throw when the warning length by array does not match
 			throw new Error(`Expected ${test.warnings.length} warnings\nReceived ${warnings.length} warnings`);
 		} else {
@@ -87,14 +85,12 @@ const runTest = (ruleName, test, opts) => stylelint.lint({
 				(warningEntry, warningIndex) => {
 					if (typeof warningEntry === 'string') {
 						if (warningEntry !== warnings[warningIndex].text) {
-							errorsCount++
 							// throw when the warning text does not match
 							throw new Error(`Expected warning: "${warningEntry}"\nRecieved warning: "${warnings[warningIndex].text}"`);
 						}
 					} else {
 						Object.keys(Object(warningEntry)).forEach(warningKey => {
 							if (warnings[warningIndex][warningKey] === warningEntry[warningKey]) {
-								errorsCount++
 								// throw when the warning key-value pair does not match
 								throw new Error(`Expected: "${warningKey}" as ${warnings[warningIndex][warningKey]}\nRecieved: ${warningEntry[warningKey]}`);
 							}
@@ -106,7 +102,6 @@ const runTest = (ruleName, test, opts) => stylelint.lint({
 	}
 
 	if (test.expect && results.output !== test.expect) {
-		errorsCount++
 		throw new Error(`Expected: ${test.expect}\nRecieved: ${results.output}`);
 	}
 });
