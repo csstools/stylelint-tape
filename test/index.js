@@ -1,4 +1,4 @@
-const stylelint = require('stylelint');
+import stylelint from 'stylelint';
 
 const ruleName = 'test/plugin';
 
@@ -41,4 +41,6 @@ const is = (value, ...keys) => {
 	: Boolean(value);
 };
 
-module.exports = stylelint.createPlugin(ruleName, ruleFunction);
+const plugin = stylelint.createPlugin(ruleName, ruleFunction);
+
+export default plugin;

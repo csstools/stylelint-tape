@@ -7,6 +7,8 @@ package-lock.json
 !.rollup.js
 !.rollup.bin.js
 !.tape.js
+!.tape.mjs
+!.tape.cjs
 !.travis.yml
 /cli.*
 /index.*

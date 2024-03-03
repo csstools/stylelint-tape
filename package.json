@@ -1,22 +1,21 @@
 {
   "name": "stylelint-tape",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "Test stylelint plugins",
   "author": "Jonathan Neal <jonathantneal@hotmail.com>",
   "license": "CC0-1.0",
   "repository": "csstools/stylelint-tape",
   "homepage": "https://github.com/csstools/stylelint-tape#readme",
   "bugs": "https://github.com/csstools/stylelint-tape/issues",
-  "main": "index.js",
+  "type": "module",
   "module": "index.mjs",
   "exports": {
     ".": {
-      "require": "./index.js",
       "import": "./index.mjs"
     }
   },
   "bin": {
-    "stylelint-tape": "cli.js"
+    "stylelint-tape": "cli.mjs"
   },
   "files": [
     "cli.js",
@@ -35,12 +34,12 @@
     "pretest:cli": "npm run build:cli && npm link",
     "pretest:node": "npm run build:api",
     "test": "npm run test:js && npm run test:node && npm run test:cli",
-    "test:js": "eslint lib/*.js --cache --ignore-path .gitignore --quiet",
-    "test:node": "node test/test.js",
-    "test:cli": "stylelint-tape --cwd ./test"
+    "test:js": "eslint lib/*.mjs --cache --ignore-path .gitignore --quiet",
+    "test:node": "node test/test.mjs",
+    "test:cli": "stylelint-tape --cwd ./test/"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=20.0.0"
   },
   "dependencies": {
     "log-update": "^4"
@@ -56,10 +55,10 @@
     "pre-commit": "^1.2.2",
     "rollup": "^2.75.7",
     "rollup-plugin-babel": "^4.3.2",
-    "stylelint": "^14.9.1"
+    "stylelint": "^16"
   },
   "peerDependencies": {
-    "stylelint": ">= 10"
+    "stylelint": ">= 16"
   },
   "eslintConfig": {
     "root": true,

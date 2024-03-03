@@ -1,10 +1,10 @@
 import logUpdate from 'log-update';
 import path from 'path';
 import stylelint from 'stylelint';
-import { bold, cyan, dim, green, red, white, yellow } from '../lib/colors';
-import { trim, json } from '../lib/utils';
-import { done, fail, wait } from '../lib/symbols';
-import nodeOptions from '../lib/get-node-options';
+import { bold, cyan, dim, green, red, white, yellow } from '../lib/colors.mjs';
+import { trim, json } from '../lib/utils.mjs';
+import { done, fail, wait } from '../lib/symbols.mjs';
+import nodeOptions from '../lib/get-node-options.mjs';
 
 export default async function stylelintTape(options, testsByRuleName) {
 	let errorsCount = 0

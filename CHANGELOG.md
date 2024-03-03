@@ -1,5 +1,9 @@
 # Changes to stylelint-tape
 
+### 5.0.0 (March 3, 2024)
+
+- Pure ESM
+
 ### 4.0.0 (March 3, 2024)
 
 - Exit 1 when tests fail (major) [#2](https://github.com/csstools/stylelint-tape/pull/2)
