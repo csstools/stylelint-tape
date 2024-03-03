@@ -6,7 +6,7 @@ import { trim, json } from '../lib/utils';
 import { done, fail, wait } from '../lib/symbols';
 import nodeOptions from '../lib/get-node-options';
 
-export default async (options, testsByRuleName) => {
+export default async function stylelintTape(options, testsByRuleName) {
 	let errorsCount = 0
 
 	const normalizedopts = Object.assign(
