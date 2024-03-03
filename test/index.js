@@ -6,7 +6,7 @@ const ruleFunction = (action, opts, context) => {
 	const shouldFix = is(context, 'fix', true);
 
 	return (root, result) => {
-		if (is(action, ['always', true])) {
+		if (is(action, [ 'always', true ])) {
 			root.walkRules(':root', rule => {
 				if (shouldFix) {
 					rule.selector = 'html';
@@ -22,7 +22,7 @@ const ruleFunction = (action, opts, context) => {
 };
 
 const messages = stylelint.utils.ruleMessages(ruleName, {
-	unexpectedRoot (rule, fix) {
+	unexpectedRoot(rule, fix) {
 		return `Unexpected "${rule.selector}" rule. Use "${fix}".`;
 	}
 });
@@ -32,8 +32,8 @@ const is = (value, ...keys) => {
 	const matches = keys.pop();
 	const subvalue = keys.reduce((result, key) => Object(result)[key], value);
 
-	return length ?
-		[].concat(matches).some(
+	return length
+		? [].concat(matches).some(
 			match => match instanceof RegExp
 				? match.test(subvalue)
 			: match === subvalue
