@@ -1,5 +1,9 @@
 # Changes to stylelint-tape
 
+### 5.0.1 (March 6, 2024)
+
+- Remove `exports` field from `package.json`
+
 ### 5.0.0 (March 3, 2024)
 
 - Pure ESM

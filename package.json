@@ -1,6 +1,6 @@
 {
   "name": "stylelint-tape",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Test stylelint plugins",
   "author": "Jonathan Neal <jonathantneal@hotmail.com>",
   "license": "CC0-1.0",
@@ -8,12 +8,7 @@
   "homepage": "https://github.com/csstools/stylelint-tape#readme",
   "bugs": "https://github.com/csstools/stylelint-tape/issues",
   "type": "module",
-  "module": "index.mjs",
-  "exports": {
-    ".": {
-      "import": "./index.mjs"
-    }
-  },
+  "main": "index.mjs",
   "bin": {
     "stylelint-tape": "cli.mjs"
   },
