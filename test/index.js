@@ -2,20 +2,25 @@ import stylelint from 'stylelint';
 
 const ruleName = 'test/plugin';
 
-const ruleFunction = (action, opts, context) => {
-	const shouldFix = is(context, 'fix', true);
-
+const ruleFunction = (action) => {
 	return (root, result) => {
 		if (is(action, [ 'always', true ])) {
 			root.walkRules(':root', rule => {
-				if (shouldFix) {
-					rule.selector = 'html';
-				} else {
-					const message = messages.unexpectedRoot(rule, 'html');
-					const node = rule;
+				const message = messages.unexpectedRoot(rule, 'html');
+				const node = rule;
 
-					stylelint.utils.report({ ruleName, message, node, result });
-				}
+				stylelint.utils.report({
+					ruleName,
+					message,
+					node,
+					result,
+					fix: {
+						node: rule,
+						apply: () => {
+							rule.selector = 'html';
+						}
+					}
+				});
 			});
 		}
 	};
@@ -40,6 +45,12 @@ const is = (value, ...keys) => {
 		)
 	: Boolean(value);
 };
+
+const meta = {
+	fixable: true,
+};
+
+ruleFunction.meta = meta;
 
 const plugin = stylelint.createPlugin(ruleName, ruleFunction);
 

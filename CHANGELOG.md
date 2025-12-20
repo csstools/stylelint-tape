@@ -1,5 +1,9 @@
 # Changes to stylelint-tape
 
+### 5.1.0 (December 20, 2025)
+
+- Add support for Stylelint 17
+
 ### 5.0.1 (March 6, 2024)
 
 - Remove `exports` field from `package.json`

@@ -1,6 +1,6 @@
 {
   "name": "stylelint-tape",
-  "version": "5.0.1",
+  "version": "5.1.0",
   "description": "Test stylelint plugins",
   "author": "Jonathan Neal <jonathantneal@hotmail.com>",
   "license": "CC0-1.0",
@@ -47,7 +47,6 @@
     "cross-env": "^7.0.3",
     "eslint": "^8.18.0",
     "eslint-config-dev": "^3.1.0",
-    "pre-commit": "^1.2.2",
     "rollup": "^2.75.7",
     "rollup-plugin-babel": "^4.3.2",
     "stylelint": "^16"

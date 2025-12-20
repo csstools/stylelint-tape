@@ -87,8 +87,8 @@ function runTest(ruleName, test, opts) {
 			});
 		}
 
-		if (test.expect && results.output !== test.expect) {
-			throw new Error(`Expected: ${test.expect}\nReceived: ${results.output}`);
+		if (test.expect && results.code !== test.expect) {
+			throw new Error(`Expected: ${test.expect}\nReceived: ${results.code}`);
 		}
 	});
 }
